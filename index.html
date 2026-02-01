@@ -9,44 +9,52 @@
 <body>
     <div class="main-container">
         <aside class="sidebar">
-            <h2>Klaus</h2>
-            <p>Status: Online</p>
+            <h2 data-key="klaus_title">کلاوس</h2>
+            <div class="status-container">
+                <p><span data-key="status_label">وضعیت</span>: <span data-key="status_online">آنلاین</span></p>
+                <span class="status-indicator"></span>
+            </div>
         </aside>
         <main class="main-content">
             <header>
-                <h1>Klaus Dashboard</h1>
+                <h1 data-key="dashboard_title">داشبورد کلاوس</h1>
+                <div class="language-switcher">
+                    <a href="#" onclick="setLanguage('fa')">فارسی</a> |
+                    <a href="#" onclick="setLanguage('en')">English</a>
+                </div>
             </header>
             <div class="kanban-board">
                 <div class="column" id="todo">
-                    <h3>⏳ To Do</h3>
+                    <h3 data-key="todo_column">⏳ انجام‌ نشده</h3>
                     <div class="card">
-                        <p>Build the basic HTML structure</p>
+                        <p data-key="task_html_structure">ساخت ساختار اولیه HTML</p>
                         <span class="date">Feb 1, 2026</span>
                     </div>
                     <div class="card">
-                        <p>Create the initial CSS for dark mode</p>
+                        <p data-key="task_css_dark_mode">ایجاد CSS اولیه برای حالت تیره</p>
                         <span class="date">Feb 1, 2026</span>
                     </div>
                 </div>
                 <div class="column" id="in-progress">
-                    <h3>🚀 In Progress</h3>
+                    <h3 data-key="inprogress_column">🚀 در حال انجام</h3>
                     <div class="card">
-                        <p>Implement Kanban board layout</p>
+                        <p data-key="task_kanban_layout">پیاده‌سازی چیدمان کانبان</p>
                         <span class="date">Feb 1, 2026</span>
                     </div>
                 </div>
                 <div class="column" id="done">
-                    <h3>✅ Done</h3>
+                    <h3 data-key="done_column">✅ انجام ‌شده</h3>
                      <div class="card">
-                        <p>Setup GitHub repository</p>
+                        <p data-key="task_github_repo">راه‌اندازی مخزن گیت‌هاب</p>
                         <span class="date">Feb 1, 2026</span>
                     </div>
                 </div>
                 <div class="column" id="archived">
-                    <h3>🗄️ Archived</h3>
+                    <h3 data-key="archived_column">🗄️ بایگانی ‌شده</h3>
                 </div>
             </div>
         </main>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -17,6 +17,7 @@ body {
     background-color: #1a1a1a;
     padding: 20px;
     border-right: 1px solid #2a2a2a;
+    flex-shrink: 0;
 }
 
 .main-content {
@@ -27,8 +28,42 @@ body {
 }
 
 header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
+
+.language-switcher a {
+    color: #a0a0a0;
+    text-decoration: none;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.language-switcher a:hover {
+    color: #ffffff;
+}
+
+.status-container {
+    display: flex;
+    align-items: center;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: #28a745;
+    border-radius: 50%;
+    margin-inline-start: 8px; /* Handles LTR/RTL */
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}
+
 
 .kanban-board {
     display: grid;
