@@ -12,7 +12,10 @@ const translations = {
         "task_input_placeholder": "Task title...",
         "save_task_btn": "Save",
         "close_modal_btn": "Cancel",
-        "add_a_card": "Add a card"
+        "add_a_card": "Add a card",
+        "welcome_task": "Welcome to your new dashboard!",
+        "dnd_task": "You can drag and drop this task",
+        "add_task_instruction": "Click the button below to add a new task"
     },
     fa: {
         "klaus_title": "کلاوس",
@@ -27,7 +30,10 @@ const translations = {
         "task_input_placeholder": "عنوان تسک...",
         "save_task_btn": "ذخیره",
         "close_modal_btn": "انصراف",
-        "add_a_card": "افزودن کارت"
+        "add_a_card": "افزودن کارت",
+        "welcome_task": "به داشبورد جدیدت خوش آمدی!",
+        "dnd_task": "می‌توانی این تسک را جابجا کنی",
+        "add_task_instruction": "برای افزودن تسک جدید روی دکمه پایین کلیک کن"
     }
 };
 
@@ -60,8 +66,15 @@ function createTaskCard(task) {
     card.draggable = true;
     card.dataset.id = task.id;
 
+    // Use a data-key if the task text is translatable, otherwise use raw text
     const p = document.createElement('p');
-    p.textContent = task.text;
+    if (task.key) {
+        p.dataset.key = task.key;
+        const currentLang = localStorage.getItem('language') || 'fa';
+        p.textContent = translations[currentLang][task.key];
+    } else {
+        p.textContent = task.text;
+    }
     card.appendChild(p);
 
     const span = document.createElement('span');
@@ -94,11 +107,15 @@ function saveTasks() {
     document.querySelectorAll('.column').forEach(column => {
         const columnId = column.id;
         const container = column.querySelector('.cards-container');
-        boardState[columnId] = Array.from(container.querySelectorAll('.card')).map(card => ({
-            id: card.dataset.id,
-            text: card.querySelector('p').textContent,
-            date: card.querySelector('.date').textContent
-        }));
+        boardState[columnId] = Array.from(container.querySelectorAll('.card')).map(card => {
+            const p = card.querySelector('p');
+            return {
+                id: card.dataset.id,
+                text: p.dataset.key ? null : p.textContent, // Save raw text only if it's not a translatable key
+                key: p.dataset.key || null, // Save the key if it exists
+                date: card.querySelector('.date').textContent
+            }
+        });
     });
     localStorage.setItem('kanbanBoard', JSON.stringify(boardState));
 }
@@ -113,14 +130,27 @@ function openTaskModal() {
 document.addEventListener('DOMContentLoaded', () => {
     // --- Setup & Load Data ---
     const savedLang = localStorage.getItem('language') || 'fa';
-    setLanguage(savedLang);
-
+    
     const savedTasks = localStorage.getItem('kanbanBoard');
     if (savedTasks) {
         tasks = JSON.parse(savedTasks);
     } else {
-        tasks = { "todo-column": [], "inprogress-column": [], "done-column": [], "archived-column": [] };
+        // Initial dummy data if nothing is saved
+        const today = new Date().toLocaleDateString('en-CA');
+        tasks = { 
+            "todo-column": [
+                { id: 'task-1', key: 'welcome_task', text: null, date: today },
+                { id: 'task-2', key: 'dnd_task', text: null, date: today },
+                { id: 'task-3', key: 'add_task_instruction', text: null, date: today }
+            ], 
+            "inprogress-column": [], 
+            "done-column": [], 
+            "archived-column": [] 
+        };
+        saveTasks(); // Save initial tasks to localStorage
     }
+    
+    setLanguage(savedLang); // Set language before rendering
     renderTasks();
 
     // --- Modal Elements ---
@@ -143,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const newTask = {
                 id: `task-${Date.now()}`,
                 text: taskText,
+                key: null,
                 date: new Date().toLocaleDateString('en-CA')
             };
             tasks['todo-column'].push(newTask);
