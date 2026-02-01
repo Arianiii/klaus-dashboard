@@ -25,7 +25,7 @@
             </header>
             <div class="kanban-board">
                 <div class="column" id="todo">
-                    <h3 data-key="todo_column">⏳ انجام‌ نشده</h3>
+                    <h3><i data-feather="list"></i><span data-key="todo_column">انجام‌ نشده</span></h3>
                     <div class="card">
                         <p data-key="task_html_structure">ساخت ساختار اولیه HTML</p>
                         <span class="date">Feb 1, 2026</span>
@@ -36,25 +36,29 @@
                     </div>
                 </div>
                 <div class="column" id="in-progress">
-                    <h3 data-key="inprogress_column">🚀 در حال انجام</h3>
+                    <h3><i data-feather="loader"></i><span data-key="inprogress_column">در حال انجام</span></h3>
                     <div class="card">
                         <p data-key="task_kanban_layout">پیاده‌سازی چیدمان کانبان</p>
                         <span class="date">Feb 1, 2026</span>
                     </div>
                 </div>
                 <div class="column" id="done">
-                    <h3 data-key="done_column">✅ انجام ‌شده</h3>
+                    <h3><i data-feather="check-circle"></i><span data-key="done_column">انجام ‌شده</span></h3>
                      <div class="card">
                         <p data-key="task_github_repo">راه‌اندازی مخزن گیت‌هاب</p>
                         <span class="date">Feb 1, 2026</span>
                     </div>
                 </div>
                 <div class="column" id="archived">
-                    <h3 data-key="archived_column">🗄️ بایگانی ‌شده</h3>
+                    <h3><i data-feather="archive"></i><span data-key="archived_column">بایگانی ‌شده</span></h3>
                 </div>
             </div>
         </main>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+        feather.replace();
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
