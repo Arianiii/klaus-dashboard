@@ -1,12 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klaus Task Dashboard</title>
+    <title>Klaus Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Klaus Task Dashboard</h1>
-    <p>Welcome to our shared task tracker. We will list our projects and progress here.</p>
+    <div class="main-container">
+        <aside class="sidebar">
+            <h2>Klaus</h2>
+            <p>Status: Online</p>
+        </aside>
+        <main class="main-content">
+            <header>
+                <h1>Klaus Dashboard</h1>
+            </header>
+            <div class="kanban-board">
+                <div class="column" id="todo">
+                    <h3>⏳ To Do</h3>
+                    <div class="card">
+                        <p>Build the basic HTML structure</p>
+                        <span class="date">Feb 1, 2026</span>
+                    </div>
+                    <div class="card">
+                        <p>Create the initial CSS for dark mode</p>
+                        <span class="date">Feb 1, 2026</span>
+                    </div>
+                </div>
+                <div class="column" id="in-progress">
+                    <h3>🚀 In Progress</h3>
+                    <div class="card">
+                        <p>Implement Kanban board layout</p>
+                        <span class="date">Feb 1, 2026</span>
+                    </div>
+                </div>
+                <div class="column" id="done">
+                    <h3>✅ Done</h3>
+                     <div class="card">
+                        <p>Setup GitHub repository</p>
+                        <span class="date">Feb 1, 2026</span>
+                    </div>
+                </div>
+                <div class="column" id="archived">
+                    <h3>🗄️ Archived</h3>
+                </div>
+            </div>
+        </main>
+    </div>
 </body>
 </html>
