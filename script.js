@@ -1,17 +1,13 @@
 const translations = {
     en: {
         "klaus_title": "Klaus",
-        "status_label": "Status",
         "status_online": "Online",
+        "ready_for_tasks": "Ready for tasks",
         "dashboard_title": "Klaus Dashboard",
         "todo_column": "To Do",
         "inprogress_column": "In Progress",
         "done_column": "Done",
         "archived_column": "Archived",
-        "task_html_structure": "Build the basic HTML structure",
-        "task_css_dark_mode": "Create the initial CSS for dark mode",
-        "task_kanban_layout": "Implement Kanban board layout",
-        "task_github_repo": "Setup GitHub repository",
         "add_new_task_title": "Add New Task",
         "task_input_placeholder": "Task title...",
         "save_task_btn": "Save",
@@ -19,23 +15,21 @@ const translations = {
     },
     fa: {
         "klaus_title": "کلاوس",
-        "status_label": "وضعیت",
         "status_online": "آنلاین",
+        "ready_for_tasks": "آماده برای تسک‌ها",
         "dashboard_title": "داشبورد کلاوس",
         "todo_column": "انجام‌ نشده",
         "inprogress_column": "در حال انجام",
         "done_column": "انجام ‌شده",
         "archived_column": "بایگانی ‌شده",
-        "task_html_structure": "ساخت ساختار اولیه HTML",
-        "task_css_dark_mode": "ایجاد CSS اولیه برای حالت تیره",
-        "task_kanban_layout": "پیاده‌سازی چیدمان کانبان",
-        "task_github_repo": "راه‌اندازی مخزن گیت‌هاب",
         "add_new_task_title": "اضافه کردن تسک جدید",
         "task_input_placeholder": "عنوان تسک...",
         "save_task_btn": "ذخیره",
         "close_modal_btn": "انصراف"
     }
 };
+
+let tasks = {};
 
 function setLanguage(lang) {
     document.documentElement.lang = lang;
@@ -55,30 +49,81 @@ function setLanguage(lang) {
     });
 
     localStorage.setItem('language', lang);
-    feather.replace(); // Re-render icons after text change
+    feather.replace();
 }
 
-function createTaskCard(taskText) {
+function createTaskCard(task) {
     const card = document.createElement('div');
     card.className = 'card';
     card.draggable = true;
+    card.dataset.id = task.id;
 
     const p = document.createElement('p');
-    p.textContent = taskText;
+    p.textContent = task.text;
     card.appendChild(p);
 
     const span = document.createElement('span');
     span.className = 'date';
-    span.textContent = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD
+    span.textContent = task.date;
     card.appendChild(span);
     
     return card;
 }
 
+function renderTasks() {
+    // Clear all columns first
+    document.querySelectorAll('.kanban-board .column').forEach(column => {
+        // Clear only cards, not the title
+        column.querySelectorAll('.card').forEach(card => card.remove());
+    });
+
+    for (const columnId in tasks) {
+        const columnElement = document.getElementById(columnId);
+        if (columnElement) {
+            tasks[columnId].forEach(task => {
+                const card = createTaskCard(task);
+                columnElement.appendChild(card);
+            });
+        }
+    }
+}
+
+function saveTasks() {
+    const boardState = {};
+    document.querySelectorAll('.kanban-board .column').forEach(column => {
+        const columnId = column.id;
+        const columnTasks = [];
+        column.querySelectorAll('.card').forEach(card => {
+            columnTasks.push({
+                id: card.dataset.id,
+                text: card.querySelector('p').textContent,
+                date: card.querySelector('.date').textContent
+            });
+        });
+        boardState[columnId] = columnTasks;
+    });
+    localStorage.setItem('kanbanBoard', JSON.stringify(boardState));
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Setup ---
+    // --- Setup & Load Data ---
     const savedLang = localStorage.getItem('language') || 'fa';
     setLanguage(savedLang);
+
+    const savedTasks = localStorage.getItem('kanbanBoard');
+    if (savedTasks) {
+        tasks = JSON.parse(savedTasks);
+    } else {
+        // Initial dummy data if nothing is saved
+        tasks = {
+            "todo-column": [],
+            "inprogress-column": [],
+            "done-column": [],
+            "archived-column": []
+        };
+    }
+    renderTasks();
 
     // --- Modal Elements ---
     const modal = document.getElementById('taskModal');
@@ -86,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModalBtn = document.getElementById('closeModalBtn');
     const saveTaskBtn = document.getElementById('saveTaskBtn');
     const taskInput = document.getElementById('taskInput');
-    const todoColumn = document.getElementById('todo-column');
 
     // --- Event Listeners ---
     addTaskBtn.addEventListener('click', () => {
@@ -102,8 +146,14 @@ document.addEventListener('DOMContentLoaded', () => {
     saveTaskBtn.addEventListener('click', () => {
         const taskText = taskInput.value.trim();
         if (taskText) {
-            const newCard = createTaskCard(taskText);
-            todoColumn.appendChild(newCard);
+            const newTask = {
+                id: `task-${Date.now()}`,
+                text: taskText,
+                date: new Date().toLocaleDateString('en-CA')
+            };
+            tasks['todo-column'].push(newTask);
+            renderTasks();
+            saveTasks();
             taskInput.value = '';
             modal.style.display = 'none';
         }
@@ -124,7 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
             animation: 150,
             ghostClass: 'sortable-ghost',
             handle: '.card',
-            draggable: '.card'
+            draggable: '.card',
+            onEnd: saveTasks // Save state after drag-and-drop
         });
     });
 });

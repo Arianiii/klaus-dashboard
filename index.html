@@ -9,10 +9,16 @@
 <body>
     <div class="main-container">
         <aside class="sidebar">
-            <h2 data-key="klaus_title">کلاوس</h2>
-            <div class="status-container">
-                <p><span data-key="status_label">وضعیت</span>: <span data-key="status_online">آنلاین</span></p>
-                <span class="status-indicator"></span>
+            <div class="profile-section">
+                <div class="profile-pic-container">
+                    <img src="https://em-content.zobj.net/source/fluent/128/star-struck_1f929.png" alt="Klaus Profile Picture" class="profile-pic">
+                </div>
+                <h2 data-key="klaus_title">کلاوس</h2>
+                <div class="status-container">
+                    <span class="status-indicator"></span>
+                    <span data-key="status_online">آنلاین</span>
+                </div>
+                <p class="ready-status" data-key="ready_for_tasks">آماده برای تسک‌ها</p>
             </div>
         </aside>
         <main class="main-content">
@@ -26,28 +32,13 @@
             <div class="kanban-board">
                 <div class="column" id="todo-column">
                     <h3><i data-feather="list"></i><span data-key="todo_column">انجام‌ نشده</span></h3>
-                    <div class="card" draggable="true">
-                        <p data-key="task_html_structure">ساخت ساختار اولیه HTML</p>
-                        <span class="date">Feb 1, 2026</span>
-                    </div>
-                    <div class="card" draggable="true">
-                        <p data-key="task_css_dark_mode">ایجاد CSS اولیه برای حالت تیره</p>
-                        <span class="date">Feb 1, 2026</span>
-                    </div>
+                    <!-- Tasks will be loaded here -->
                 </div>
                 <div class="column" id="inprogress-column">
                     <h3><i data-feather="loader"></i><span data-key="inprogress_column">در حال انجام</span></h3>
-                    <div class="card" draggable="true">
-                        <p data-key="task_kanban_layout">پیاده‌سازی چیدمان کانبان</p>
-                        <span class="date">Feb 1, 2026</span>
-                    </div>
                 </div>
                 <div class="column" id="done-column">
                     <h3><i data-feather="check-circle"></i><span data-key="done_column">انجام ‌شده</span></h3>
-                     <div class="card" draggable="true">
-                        <p data-key="task_github_repo">راه‌اندازی مخزن گیت‌هاب</p>
-                        <span class="date">Feb 1, 2026</span>
-                    </div>
                 </div>
                 <div class="column" id="archived-column">
                     <h3><i data-feather="archive"></i><span data-key="archived_column">بایگانی ‌شده</span></h3>
