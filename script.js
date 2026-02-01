@@ -93,10 +93,12 @@ function renderTasks() {
         const columnElement = document.getElementById(columnId);
         if (columnElement) {
             const container = columnElement.querySelector('.cards-container');
-            tasks[columnId].forEach(task => {
-                const card = createTaskCard(task);
-                container.appendChild(card);
-            });
+            if (tasks[columnId]) {
+                tasks[columnId].forEach(task => {
+                    const card = createTaskCard(task);
+                    container.appendChild(card);
+                });
+            }
         }
     }
 }
@@ -126,14 +128,18 @@ function openTaskModal() {
     taskInput.focus();
 }
 
+function isBoardEmpty(board) {
+    if (!board) return true;
+    return Object.values(board).every(column => column.length === 0);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- Setup & Load Data ---
     const savedLang = localStorage.getItem('language') || 'fa';
+    let savedTasks = localStorage.getItem('kanbanBoard');
     
-    const savedTasks = localStorage.getItem('kanbanBoard');
-    if (savedTasks) {
-        tasks = JSON.parse(savedTasks);
-    } else {
+    // Check if savedTasks is null, undefined, or represents an empty board
+    if (!savedTasks || isBoardEmpty(JSON.parse(savedTasks))) {
         const today = new Date().toLocaleDateString('en-CA');
         tasks = { 
             "todo-column": [
@@ -145,7 +151,9 @@ document.addEventListener('DOMContentLoaded', () => {
             "done-column": [], 
             "archived-column": [] 
         };
-        saveTasks();
+        saveTasks(); // Save the initial tasks immediately
+    } else {
+        tasks = JSON.parse(savedTasks);
     }
     
     setLanguage(savedLang);
@@ -172,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 key: null,
                 date: new Date().toLocaleDateString('en-CA')
             };
+            if (!tasks['todo-column']) tasks['todo-column'] = [];
             tasks['todo-column'].push(newTask);
             renderTasks();
             saveTasks();
