@@ -15,7 +15,7 @@ const translations = {
         "add_a_card": "Add a card",
         "welcome_task": "Welcome to your new dashboard!",
         "dnd_task": "You can drag and drop this task",
-        "add_task_instruction": "Click the button below to add a new task"
+        "add_task_instruction": "Click 'Add a card' below to start"
     },
     fa: {
         "klaus_title": "کلاوس",
@@ -33,7 +33,7 @@ const translations = {
         "add_a_card": "افزودن کارت",
         "welcome_task": "به داشبورد جدیدت خوش آمدی!",
         "dnd_task": "می‌توانی این تسک را جابجا کنی",
-        "add_task_instruction": "برای افزودن تسک جدید روی دکمه پایین کلیک کن"
+        "add_task_instruction": "برای شروع، روی 'افزودن کارت' کلیک کن"
     }
 };
 
@@ -66,7 +66,6 @@ function createTaskCard(task) {
     card.draggable = true;
     card.dataset.id = task.id;
 
-    // Use a data-key if the task text is translatable, otherwise use raw text
     const p = document.createElement('p');
     if (task.key) {
         p.dataset.key = task.key;
@@ -111,8 +110,8 @@ function saveTasks() {
             const p = card.querySelector('p');
             return {
                 id: card.dataset.id,
-                text: p.dataset.key ? null : p.textContent, // Save raw text only if it's not a translatable key
-                key: p.dataset.key || null, // Save the key if it exists
+                text: p.dataset.key ? null : p.textContent,
+                key: p.dataset.key || null,
                 date: card.querySelector('.date').textContent
             }
         });
@@ -135,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedTasks) {
         tasks = JSON.parse(savedTasks);
     } else {
-        // Initial dummy data if nothing is saved
         const today = new Date().toLocaleDateString('en-CA');
         tasks = { 
             "todo-column": [
@@ -147,19 +145,17 @@ document.addEventListener('DOMContentLoaded', () => {
             "done-column": [], 
             "archived-column": [] 
         };
-        saveTasks(); // Save initial tasks to localStorage
+        saveTasks();
     }
     
-    setLanguage(savedLang); // Set language before rendering
+    setLanguage(savedLang);
     renderTasks();
 
-    // --- Modal Elements ---
+    // --- Modal & Add Task Listeners ---
     const modal = document.getElementById('taskModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
     const saveTaskBtn = document.getElementById('saveTaskBtn');
     const taskInput = document.getElementById('taskInput');
-
-    // --- Event Listeners for Adding Tasks ---
     document.querySelector('.add-card-btn').addEventListener('click', openTaskModal);
     
     closeModalBtn.addEventListener('click', () => {
@@ -191,9 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Initialize SortableJS ---
-    const containers = document.querySelectorAll('.cards-container');
-    containers.forEach(container => {
+    // --- SortableJS Init ---
+    document.querySelectorAll('.cards-container').forEach(container => {
         new Sortable(container, {
             group: 'kanban',
             animation: 150,

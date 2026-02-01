@@ -1,31 +1,33 @@
 :root {
-    --todo-color: #3b82f6;
-    --inprogress-color: #f97316;
-    --done-color: #22c55e;
-    --archived-color: #6b7280;
+    --todo-color: #007aff;
+    --inprogress-color: #ff9500;
+    --done-color: #34c759;
+    --archived-color: #8e8e93;
 }
 
 body {
-    background-color: #171717;
-    color: #e0e0e0;
+    background-color: #000000;
+    color: #f2f2f7;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
-    background-image: radial-gradient(circle at 1% 1%, rgba(90, 80, 150, 0.1) 0%, transparent 30%),
-                      radial-gradient(circle at 99% 99%, rgba(10, 150, 100, 0.1) 0%, transparent 30%);
+    background-image: radial-gradient(circle at 1% 1%, rgba(0, 122, 255, 0.1) 0%, transparent 40%),
+                      radial-gradient(circle at 99% 99%, rgba(52, 199, 89, 0.1) 0%, transparent 40%);
     background-attachment: fixed;
     height: 100vh;
+    overflow: hidden;
 }
 
 .main-container {
     display: flex;
     width: 100%;
+    height: 100%;
 }
 
 .sidebar {
     width: 240px;
-    background-color: rgba(26, 26, 26, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background-color: rgba(28, 28, 30, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     border-right: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px;
     flex-shrink: 0;
@@ -42,25 +44,19 @@ body {
 .profile-pic-container {
     width: 90px;
     height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px;
     border-radius: 50%;
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
     margin-bottom: 15px;
+    padding: 3px;
 }
 
-.profile-emoji {
-    font-size: 64px;
-    animation: emoji-pulse 3s infinite ease-in-out;
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid #1c1c1e;
+    object-fit: cover;
 }
-
-@keyframes emoji-pulse {
-    0%, 100% { transform: scale(1) rotate(0deg); }
-    50% { transform: scale(1.15) rotate(5deg); }
-}
-
 
 .profile-section h2 {
     margin: 0;
@@ -74,12 +70,13 @@ body {
     gap: 8px;
     margin-top: 8px;
     color: #a0a0a0;
+    font-size: 0.9em;
 }
 
 .status-indicator {
-    width: 10px;
-    height: 10px;
-    background-color: #28a745;
+    width: 8px;
+    height: 8px;
+    background-color: var(--done-color);
     border-radius: 50%;
     animation: pulse 2s infinite;
 }
@@ -89,18 +86,18 @@ body {
     padding: 8px 15px;
     border-radius: 8px;
     font-size: 0.9em;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
-    70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+    0% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(52, 199, 89, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
 }
 
 .main-content {
     flex-grow: 1;
-    padding: 20px;
+    padding: 20px 30px;
     display: flex;
     flex-direction: column;
     overflow: auto;
@@ -112,6 +109,9 @@ header {
     align-items: center;
     margin-bottom: 20px;
 }
+header h1 {
+    font-weight: 700;
+}
 
 .language-switcher a {
     color: #a0a0a0;
@@ -120,14 +120,12 @@ header {
     cursor: pointer;
     transition: color 0.2s ease;
 }
-.language-switcher a:hover {
-    color: #ffffff;
-}
+.language-switcher a:hover { color: #ffffff; }
 
 .kanban-board {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+    gap: 25px;
     flex-grow: 1;
 }
 
@@ -141,7 +139,7 @@ header {
 
 .cards-container {
     flex-grow: 1;
-    min-height: 100px; /* Drop area even when empty */
+    min-height: 100px;
 }
 
 .column h3 {
@@ -152,6 +150,7 @@ header {
     display: flex;
     align-items: center;
     gap: 8px;
+    color: #e5e5ea;
 }
 #todo-column h3 svg { color: var(--todo-color); }
 #inprogress-column h3 svg { color: var(--inprogress-color); }
@@ -160,16 +159,16 @@ header {
 
 
 .card {
-    background: rgba(44, 44, 44, 0.4);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-left-width: 4px;
+    background: rgba(44, 44, 46, 0.6);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
     padding: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     cursor: move;
-    transition: background 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    border-left: 4px solid transparent; /* Placeholder for color */
 }
 #todo-column .card { border-left-color: var(--todo-color); }
 #inprogress-column .card { border-left-color: var(--inprogress-color); }
@@ -177,16 +176,20 @@ header {
 #archived-column .card { border-left-color: var(--archived-color); }
 
 .card:hover {
-    background: rgba(60, 60, 60, 0.6);
+    background: rgba(60, 60, 62, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
 .card p {
-    margin: 0 0 5px 0;
+    margin: 0 0 8px 0;
+    font-size: 1.05em;
+    line-height: 1.4;
 }
 
 .card .date {
     font-size: 0.8em;
-    color: #aaa;
+    color: #8e8e93;
 }
 
 .sortable-ghost {
@@ -199,7 +202,7 @@ header {
     border: none;
     color: #a0a0a0;
     padding: 10px;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     width: 100%;
     text-align: start;
@@ -212,7 +215,6 @@ header {
     background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
 }
-
 
 /* Modal Styles */
 .modal {
@@ -231,23 +233,23 @@ header {
 }
 
 .modal-content {
-    background: rgba(30, 30, 30, 0.8);
+    background: rgba(30, 30, 30, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     padding: 25px;
-    border-radius: 12px;
+    border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     width: 90%;
     max-width: 400px;
 }
 
-.modal-content h3 {
-    margin-top: 0;
-}
+.modal-content h3 { margin-top: 0; }
 
 .modal-content input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 15px;
-    border-radius: 6px;
+    border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background-color: rgba(0, 0, 0, 0.2);
     color: white;
@@ -255,10 +257,11 @@ header {
 }
 
 .modal-content button {
-    padding: 10px 15px;
+    padding: 12px 18px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: 600;
     margin-inline-end: 10px;
 }
 
