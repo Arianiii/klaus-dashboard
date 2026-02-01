@@ -55,6 +55,18 @@
             </div>
         </main>
     </div>
+
+    <button id="addTaskBtn" class="fab"><i data-feather="plus"></i></button>
+
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <h3 data-key="add_new_task_title">اضافه کردن تسک جدید</h3>
+            <input type="text" id="taskInput" placeholder="عنوان تسک..." data-key="task_input_placeholder">
+            <button id="saveTaskBtn" data-key="save_task_btn">ذخیره</button>
+            <button id="closeModalBtn" data-key="close_modal_btn">انصراف</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script>
