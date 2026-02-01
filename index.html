@@ -24,37 +24,38 @@
                 </div>
             </header>
             <div class="kanban-board">
-                <div class="column" id="todo">
+                <div class="column" id="todo-column">
                     <h3><i data-feather="list"></i><span data-key="todo_column">انجام‌ نشده</span></h3>
-                    <div class="card">
+                    <div class="card" draggable="true">
                         <p data-key="task_html_structure">ساخت ساختار اولیه HTML</p>
                         <span class="date">Feb 1, 2026</span>
                     </div>
-                    <div class="card">
+                    <div class="card" draggable="true">
                         <p data-key="task_css_dark_mode">ایجاد CSS اولیه برای حالت تیره</p>
                         <span class="date">Feb 1, 2026</span>
                     </div>
                 </div>
-                <div class="column" id="in-progress">
+                <div class="column" id="inprogress-column">
                     <h3><i data-feather="loader"></i><span data-key="inprogress_column">در حال انجام</span></h3>
-                    <div class="card">
+                    <div class="card" draggable="true">
                         <p data-key="task_kanban_layout">پیاده‌سازی چیدمان کانبان</p>
                         <span class="date">Feb 1, 2026</span>
                     </div>
                 </div>
-                <div class="column" id="done">
+                <div class="column" id="done-column">
                     <h3><i data-feather="check-circle"></i><span data-key="done_column">انجام ‌شده</span></h3>
-                     <div class="card">
+                     <div class="card" draggable="true">
                         <p data-key="task_github_repo">راه‌اندازی مخزن گیت‌هاب</p>
                         <span class="date">Feb 1, 2026</span>
                     </div>
                 </div>
-                <div class="column" id="archived">
+                <div class="column" id="archived-column">
                     <h3><i data-feather="archive"></i><span data-key="archived_column">بایگانی ‌شده</span></h3>
                 </div>
             </div>
         </main>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script>
         feather.replace();
