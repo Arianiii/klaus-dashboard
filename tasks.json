@@ -1,0 +1,12 @@
+{
+    "todo-column": [
+        { "id": "task-1", "key": "welcome_task", "text": null, "date": "2026-02-01" },
+        { "id": "task-2", "key": "dnd_task", "text": null, "date": "2026-02-01" },
+        { "id": "task-3", "key": "add_task_instruction", "text": null, "date": "2026-02-01" }
+    ],
+    "inprogress-column": [
+        { "id": "task-4", "text": "اتصال به داشبورد و آماده‌سازی برای ثبت فعالیت‌ها", "key": null, "date": "2026-02-01" }
+    ],
+    "done-column": [],
+    "archived-column": []
+}
